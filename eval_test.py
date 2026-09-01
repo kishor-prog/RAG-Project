@@ -66,7 +66,7 @@ def calculate_metrics(ground_truth: str, generated_answer: str, contexts: list):
 
 def run_evaluation(api_url: str, output_csv: str):
     print("\n=======================================================")
-    print("      Evolvex RAG Benchmark & Evaluation Pipeline       ")
+    print("      Universal RAG Benchmark & Evaluation Pipeline     ")
     print(f"      Target Endpoint: {api_url}                     ")
     print("=======================================================\n")
 
@@ -137,7 +137,7 @@ def run_evaluation(api_url: str, output_csv: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Evolvex RAG Evaluation & Benchmarking Tool")
+    parser = argparse.ArgumentParser(description="Universal RAG Evaluation & Benchmarking Tool")
     parser.add_argument("--url", default="http://127.0.0.1:8000/api/v1/query", help="RAG Query API endpoint")
     parser.add_argument("--output", default="advanced_evaluation_report.csv", help="Output CSV path")
     args = parser.parse_args()

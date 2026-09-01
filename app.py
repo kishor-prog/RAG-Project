@@ -61,7 +61,7 @@ def query_rag_system(vectordb, top_k: int = 3):
     client = Groq(api_key=GROQ_API_KEY.strip())
 
     print("\n=======================================================")
-    print("   Evolvex RAG Interactive Terminal (Groq + LLaMA 3.3)  ")
+    print("   Universal RAG Interactive Terminal (Groq + LLaMA 3.3)")
     print("=======================================================")
     print("Type your question and press Enter. Type 'exit' or 'quit' to quit.\n")
 

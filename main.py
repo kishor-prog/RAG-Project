@@ -37,9 +37,9 @@ EMBEDDING_MODEL = None
 # =====================================================
 
 app = FastAPI(
-    title="Evolvex Enterprise RAG API Platform",
+    title="Production RAG API Platform",
     description=(
-        "Production-grade Retrieval-Augmented Generation (RAG) backend engine "
+        "High-performance Retrieval-Augmented Generation (RAG) backend engine for document intelligence and Q&A, "
         "powered by FAISS Vector Database, LangChain, HuggingFace embeddings, and ultra-fast Groq LLaMA-3.3 inference."
     ),
     version="1.1.0",
@@ -82,7 +82,7 @@ class HealthResponse(BaseModel):
 
 
 class QueryRequest(BaseModel):
-    question: str = Field(..., min_length=1, example="What does Evolvex AI Solutions specialize in?")
+    question: str = Field(..., min_length=1, example="What are the key highlights of the document?")
     email: Optional[str] = Field(None, example="user@example.com")
     phone_number: Optional[str] = Field(None, example="+1234567890")
     top_k: Optional[int] = Field(3, ge=1, le=10, description="Number of context chunks to retrieve")

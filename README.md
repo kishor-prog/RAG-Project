@@ -1,4 +1,4 @@
-# ⚡ Evolvex Enterprise RAG Platform
+# ⚡ Production RAG Platform (Retrieval-Augmented Generation)
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?style=flat&logo=FastAPI&logoColor=white)](https://fastapi.tiangolo.com)
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-3776AB.svg?style=flat&logo=Python&logoColor=white)](https://www.python.org/)
@@ -7,9 +7,9 @@
 [![Groq](https://img.shields.io/badge/Groq-LLaMA--3.3--70B-F55036.svg?style=flat)](https://groq.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A high-performance, production-ready **Retrieval-Augmented Generation (RAG)** platform designed for enterprise document ingestion, semantic vector search, and grounded conversational question-answering.
+A high-performance, modular **Retrieval-Augmented Generation (RAG)** platform designed for document ingestion, semantic vector search, and grounded conversational question-answering for any organization, team, or codebase.
 
-Engineered with **FastAPI**, **LangChain**, **HuggingFace Embeddings (`all-MiniLM-L6-v2`)**, **FAISS Vector Database**, and **Groq LPU™ Inference (LLaMA-3.3-70B-Versatile)** for sub-second generative intelligence.
+Built with **FastAPI**, **LangChain**, **HuggingFace Embeddings (`all-MiniLM-L6-v2`)**, **FAISS Vector Database**, and **Groq LPU™ Cloud Acceleration (LLaMA-3.3-70B-Versatile)** for ultra-low latency intelligent search and synthesis.
 
 ---
 
@@ -43,7 +43,7 @@ Engineered with **FastAPI**, **LangChain**, **HuggingFace Embeddings (`all-MiniL
 
 ```
                       +-----------------------------+
-                      |     Enterprise PDF File     |
+                      |     Input PDF Document      |
                       +--------------+--------------+
                                      |
                                      v
@@ -90,10 +90,10 @@ Engineered with **FastAPI**, **LangChain**, **HuggingFace Embeddings (`all-MiniL
 
 ## 🚀 Key Features
 
-- **⚡ Blazing-Fast Inference**: Ultra-low latency responses utilizing **Groq's LPUs** with `llama-3.3-70b-versatile`.
+- **⚡ Blazing-Fast Inference**: Ultra-low latency responses utilizing **Groq LPUs** with `llama-3.3-70b-versatile`.
 - **🔍 Dense Semantic Search**: Powered by `sentence-transformers/all-MiniLM-L6-v2` embeddings and local **FAISS** vector indexing.
 - **🛡 Grounded & Hallucination-Free**: Strict contextual prompt constraints ensuring the model only answers from verified document context.
-- **🌐 Enterprise REST API**: Async **FastAPI** application with CORS middleware, Pydantic data schemas, and auto-generated Swagger UI (`/docs`).
+- **🌐 Universal REST API**: Async **FastAPI** application with CORS middleware, Pydantic data schemas, and auto-generated Swagger UI (`/docs`).
 - **💻 Interactive CLI**: Clean terminal interface (`app.py`) for live querying and document exploration without spinning up web services.
 - **📊 Evaluation & Benchmark Framework**: Built-in verification script (`eval_test.py`) computing **Context Recall**, **Faithfulness**, **Context Precision**, and **F1 Score**.
 - **🧪 Automated Test Suite**: Integrated test client ensuring API integrity, payload validation, and system health.
@@ -117,7 +117,7 @@ Engineered with **FastAPI**, **LangChain**, **HuggingFace Embeddings (`all-MiniL
 ## 📂 Project Directory Structure
 
 ```plaintext
-rag-project2/
+rag-project/
 ├── .env.example                     # Environment variables configuration template
 ├── .gitignore                       # Git ignore file (excludes secrets and virtualenv)
 ├── app.py                           # Standalone Interactive CLI RAG terminal application
@@ -127,7 +127,7 @@ rag-project2/
 ├── advanced_evaluation_report.csv   # Latest benchmark and evaluation output report
 ├── model_evaluation_report.csv      # Model performance log
 ├── data/                            # Raw PDF storage directory
-│   └── evolvex.pdf                  # Sample enterprise document
+│   └── evolvex.pdf                  # Sample indexed document
 ├── faiss_index/                     # Persisted FAISS vector database
 │   ├── index.faiss
 │   └── index.pkl
@@ -148,8 +148,8 @@ rag-project2/
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/kishor-prog/RAG-Project.git
+cd RAG-Project
 
 # Create a virtual environment
 python -m venv venv
@@ -205,26 +205,26 @@ Once running:
 To query your indexed documents directly via the terminal:
 
 ```bash
-# Query the default PDF (data/evolvex.pdf)
+# Query the default PDF
 python app.py
 
-# Or supply a custom PDF path
-python app.py "data/my_custom_document.pdf"
+# Or supply any custom PDF path
+python app.py "data/your_document.pdf"
 ```
 
 Example CLI session:
 ```text
 =======================================================
-   Evolvex RAG Interactive Terminal (Groq + LLaMA 3.3)  
+   Universal RAG Interactive Terminal (Groq + LLaMA 3.3)
 =======================================================
 Type your question and press Enter. Type 'exit' or 'quit' to quit.
 
-Ask a question: What is the engineering contact email for Evolvex?
+Ask a question: What is the main summary of the document?
 [*] Searching vector database for relevant context...
 [*] Generating answer with llama-3.3-70b-versatile...
 
 Answer:
-The primary engineering contact email for Evolvex AI Solutions is kishor123@gmail.com.
+Based on the document context, here is the detailed summary...
 --------------------------------------------------
 ```
 
@@ -232,7 +232,7 @@ The primary engineering contact email for Evolvex AI Solutions is kishor123@gmai
 
 ### 3. Running the Benchmark & Evaluation Pipeline
 
-Benchmark your RAG system's accuracy against ground-truth datasets:
+Benchmark your RAG system's accuracy against test datasets:
 
 ```bash
 python eval_test.py
@@ -255,7 +255,7 @@ python -m unittest discover tests
 ## 📡 API Reference
 
 ### `GET /`
-**Description:** Health check endpoint to verify system status and vector store initialization.
+**Description:** Health check endpoint to verify system status and vector store availability.
 
 #### Response (`200 OK`)
 ```json
@@ -280,14 +280,14 @@ python -m unittest discover tests
 curl -X POST "http://127.0.0.1:8000/api/v1/upload" \
   -H "accept: application/json" \
   -H "Content-Type: multipart/form-data" \
-  -F "file=@data/evolvex.pdf"
+  -F "file=@data/sample.pdf"
 ```
 
 #### Response (`201 Created`)
 ```json
 {
   "message": "PDF document uploaded and indexed successfully.",
-  "filename": "evolvex.pdf",
+  "filename": "sample.pdf",
   "chunks_created": 3,
   "storage": "FAISS Index Saved"
 }
@@ -301,9 +301,9 @@ curl -X POST "http://127.0.0.1:8000/api/v1/upload" \
 #### Request Body (`application/json`)
 ```json
 {
-  "question": "What is the primary engineering contact email?",
+  "question": "What are the key highlights of the document?",
   "email": "user@example.com",
-  "phone_number": "+91 9874563210",
+  "phone_number": "+1234567890",
   "top_k": 3
 }
 ```
@@ -313,7 +313,7 @@ curl -X POST "http://127.0.0.1:8000/api/v1/upload" \
 curl -X POST "http://127.0.0.1:8000/api/v1/query" \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "What is the primary engineering contact email?",
+    "question": "What are the key highlights of the document?",
     "top_k": 3
   }'
 ```
@@ -321,12 +321,13 @@ curl -X POST "http://127.0.0.1:8000/api/v1/query" \
 #### Response (`200 OK`)
 ```json
 {
-  "question": "What is the primary engineering contact email?",
-  "answer": "The primary engineering contact email is kishor123@gmail.com.",
+  "question": "What are the key highlights of the document?",
+  "answer": "The key highlights include...",
   "contexts": [
-    "Evolvex AI Solutions. Contact: kishor123@gmail.com, Phone: +91 9874563210..."
+    "Context snippet 1...",
+    "Context snippet 2..."
   ],
-  "retrieved_count": 1,
+  "retrieved_count": 2,
   "model": "llama-3.3-70b-versatile"
 }
 ```
